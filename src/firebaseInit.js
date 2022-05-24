@@ -64,7 +64,7 @@ export let getUser = async (username, password) => {
 }
 
 export let getProfession = async (profesionId) => {
-  const userQuery = await query(professionCollection, where("profession_id", "==", profesionId));
+  const userQuery = await query(professionCollection, where("__name__", "==", profesionId));
   const snapshot = await getDocs(userQuery);
 
   let pros = [];
