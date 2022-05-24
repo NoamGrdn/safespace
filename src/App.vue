@@ -7,7 +7,7 @@
       </tr>
       <tr v-for="pro in professions">
         <td>{{pro.name}}</td>
-        <td>{{pro.profession_id}}</td>
+        <td>{{pro.id}}</td>
       </tr>
     </tbody>
   </div>

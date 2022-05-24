@@ -29,7 +29,7 @@ export let getProfessions = () => {
   {
     let professions = [];
     snapshot.docs.forEach((doc) => {
-      professions.push(doc.data());
+      professions.push({id: doc.id, ...doc.data()});
     });
     return professions;
   });
@@ -69,7 +69,7 @@ export let getProfession = async (profesionId) => {
 
   let pros = [];
   snapshot.forEach((doc) => {
-    pros.push(doc.data())
+    pros.push({id: doc.id, ...doc.data()})
   });
 
   if (pros.length != 1) {
