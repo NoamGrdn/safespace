@@ -43,6 +43,8 @@ export let getUsers = () => {
     snapshot.docs.forEach((doc) => {
       users.push(doc.data());
     });
+
+    console.log(users);
     return users;
   });
 }
@@ -98,7 +100,7 @@ export let addUser = async (username, password, name, familyName, professionId) 
     return false;
   }
   let user = doc(usersCollection);
-  setDoc(user, {username, password, name, family_name: familyName, profession: await getProfession(professionId)});
+  setDoc(user, {username, password, name, family_name: familyName, profession: await doc(professionCollection, professionId)});
 
   return true;
 }
