@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, where } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, where, doc, setDoc } from "firebase/firestore"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -48,7 +48,7 @@ export let getUsers = () => {
 }
 
 export let getUser = async (username, password) => {
-  const userQuery = await query(usersCollection, where("username", "==", username) && where("password", "==", password));
+  const userQuery = await query(usersCollection, where("username", "==", username), where("password", "==", password));
   const snapshot = await getDocs(userQuery);
 
   let users = [];
@@ -89,4 +89,16 @@ export let isPro = async (username, password) => {
   });
 
   return pros.length > 0;
+}
+
+export let addUser = async (username, password, name, familyName, professionId) => {
+  const user_exists = await getUser(username, password) != null;
+  if (user_exists) {
+    console.log("user already exists");
+    return false;
+  }
+  let user = doc(usersCollection);
+  setDoc(user, {username, password, name, family_name: familyName, profession: await getProfession(professionId)});
+
+  return true;
 }
